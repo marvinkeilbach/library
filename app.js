@@ -6,11 +6,12 @@ let inputPages;
 let inputRead;
 
 const library = document.querySelector(".library");
+const books = library.childNodes;
 const inputField = document.querySelector(".new-book");
 const addButton = document.querySelector(".add-button");
 const inputs = document.querySelectorAll(".new-book-input");
 const submit = document.querySelector(".new-book-submit");
-let books = document.querySelectorAll(".book");
+let deleteButtons = [];
 
 inputs.forEach((input) => {
     input.addEventListener("input", () => {
@@ -53,6 +54,8 @@ addButton.addEventListener("click", () => {
     initializeValues();
 })
 
+
+
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -79,7 +82,7 @@ function render() {
         const status = book.read ? "Read" : "Not Read Yet";
         const statusClass = book.read ? "read" : "unread";
         bookDiv.innerHTML = 
-            `<button class="delete">X</button>
+            `<button class="delete" data-index${myLibrary.indexOf(book)}>X</button>
             <p class="book-text title">${book.title}</p>
             <p class="book-text author">${book.author}</p>
             <p class="book-text pages">Pages: ${book.pages}</p>
@@ -87,7 +90,7 @@ function render() {
             <button class="book-text toggle">Toggle Status</button>`;
         library.appendChild(bookDiv);
     });
-    updateBookSelector();
+    updateBooks();
 }
 
 function initializeValues () {
@@ -104,23 +107,19 @@ function clearInputs() {
         } else {
             input.checked = false;
         }
-    })
-
-}
-
-function updateBookSelector () {
-    books = document.querySelectorAll(".book");
-    books.forEach((book) => {
-        const deleteButton = book.childNodes[0];
-        let removeIndex = (book.getAttribute("data-index"));
-        getNumber(removeIndex);
-        console.log(removeIndex);
-        deleteButton.addEventListener("click", () => {
-
-        });
     });
 }
 
-function getNumber(string) {
-    console.log(string);
+function updateBooks() {
+    deleteButtons = [];
+    books.forEach(book => {
+        deleteButtons.push(book.firstChild);
+    });
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let removeIndex = deleteButtons.indexOf(button);
+            myLibrary.splice(removeIndex, 1);
+            render();
+        })
+    })
 }
