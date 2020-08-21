@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="add">
+        <button class="add-button">Add A Book!</button>
+    </div>
+    
+    <div class="header">
+        <h1 class="heading">YOUR LIBRARY</h1>
+        <div class="new-book">
+            <label for="add-title">Title:</label>
+            <input class="new-book-input" id="add-title" type="text">
+            <label for="add-author">Author:</label>
+            <input class="new-book-input" id="add-author" type="text">
+            <label for="add-pages">Pages:</label>
+            <input class="new-book-input" id="add-pages" type="number" min="1" max="3000">
+            <label for="add-status">Read Already?</label>
+            <input class="new-book-input" id="add-status" type="checkbox">
+            <input class="new-book-submit" id="submit" type="submit" value="Add Book To Library">
+        </div>
+    </div>
+
+    <div class="library">
+        <!-- <div class="book">
+            <button class="delete">X</button>
+            <p class="book-text title">Example</p>
+            <p class="book-text author">Example</p>
+            <p class="book-text pages">Pages: 356</p>
+            <p class="book-text status read">Status: read</p>
+            <button class="book-text toggle">Toggle Status</button>  
+        </div> -->
+    </div>
+</body>
+
+<script src="app.js"></script>
+</html>
