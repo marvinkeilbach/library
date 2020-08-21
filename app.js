@@ -11,7 +11,6 @@ const inputField = document.querySelector(".new-book");
 const addButton = document.querySelector(".add-button");
 const inputs = document.querySelectorAll(".new-book-input");
 const submit = document.querySelector(".new-book-submit");
-let deleteButtons = [];
 
 inputs.forEach((input) => {
     input.addEventListener("input", () => {
@@ -78,15 +77,14 @@ function render() {
     myLibrary.forEach(book => {
         const bookDiv = document.createElement("div");
         bookDiv.classList.add("book");
-        bookDiv.setAttribute("data-index", `"${myLibrary.indexOf(book)}"`);
         const status = book.read ? "Read" : "Not Read Yet";
         const statusClass = book.read ? "read" : "unread";
         bookDiv.innerHTML = 
-            `<button class="delete" data-index${myLibrary.indexOf(book)}>X</button>
+            `<button class="delete">X</button>
             <p class="book-text title">${book.title}</p>
             <p class="book-text author">${book.author}</p>
-            <p class="book-text pages">Pages: ${book.pages}</p>
-            <p class="book-text status ${statusClass}">Status: ${status}</p>
+            <p class="book-text pages">${book.pages} Pages</p>
+            <p class="book-text status ${statusClass}">${status}</p>
             <button class="book-text toggle">Toggle Status</button>`;
         library.appendChild(bookDiv);
     });
@@ -111,10 +109,13 @@ function clearInputs() {
 }
 
 function updateBooks() {
-    deleteButtons = [];
+    let deleteButtons = [];
+    let toggleButtons = [];
     books.forEach(book => {
         deleteButtons.push(book.firstChild);
+        toggleButtons.push(book.lastChild);
     });
+
     deleteButtons.forEach(button => {
         button.addEventListener("click", () => {
             let removeIndex = deleteButtons.indexOf(button);
@@ -122,4 +123,12 @@ function updateBooks() {
             render();
         })
     })
+    
+    toggleButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let toggleIndex = toggleButtons.indexOf(button);
+            myLibrary[toggleIndex].read = !(myLibrary[toggleIndex].read);
+            render();
+        });
+    });
 }
