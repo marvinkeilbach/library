@@ -12,6 +12,25 @@ const addButton = document.querySelector(".add-button");
 const inputs = document.querySelectorAll(".new-book-input");
 const submit = document.querySelector(".new-book-submit");
 
+// Local Storage Check + functions
+if(!(localStorage.getItem('library'))) {
+    populateStorage();
+} else {
+    setLibrary();
+}
+
+function populateStorage() {
+    window.localStorage.setItem('library', JSON.stringify(myLibrary));
+}
+
+function setLibrary() {
+        let currentLibrary = JSON.parse(window.localStorage.getItem('library')) || [];
+        myLibrary = currentLibrary;
+        render();
+}
+
+
+// Event Listeners for Inputs, submit button and the add button
 inputs.forEach((input) => {
     input.addEventListener("input", () => {
         if(input.id==="add-status") {
@@ -55,6 +74,7 @@ addButton.addEventListener("click", () => {
 
 
 
+// Book constructor + prototype toggle feature
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -66,9 +86,12 @@ Book.prototype.toggleStatus = function() {
     this.read = !this.read;
 }
 
+
+//Functionality (addBook, render to HTML, resetting values and Input)
 function addBookToLibrary(title, author, pages, read) {
     const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
+    populateStorage();
 }
 
 function render() {
@@ -108,6 +131,8 @@ function clearInputs() {
     });
 }
 
+
+// Event listeners for toggle- and delete-buttons that are updated whenever the render function is called
 function updateBooks() {
     let deleteButtons = [];
     let toggleButtons = [];
@@ -120,6 +145,7 @@ function updateBooks() {
         button.addEventListener("click", () => {
             let removeIndex = deleteButtons.indexOf(button);
             myLibrary.splice(removeIndex, 1);
+            populateStorage();
             render();
         })
     })
@@ -128,6 +154,7 @@ function updateBooks() {
         button.addEventListener("click", () => {
             let toggleIndex = toggleButtons.indexOf(button);
             myLibrary[toggleIndex].read = !(myLibrary[toggleIndex].read);
+            populateStorage();
             render();
         });
     });
