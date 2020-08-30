@@ -1,10 +1,9 @@
-html, boody {
+html, body {
     margin: 0px;
     padding: 0px;
     height: 100%;
     font-family: 'Cinzel', serif;
     font-size: 30px;
-    background:
 }
 
 .library {
